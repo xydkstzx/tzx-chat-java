@@ -41,3 +41,6 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - com.tzx.chat.controller
+          -
+project:
+  folder: D:/java/resource/tzx-chat-java

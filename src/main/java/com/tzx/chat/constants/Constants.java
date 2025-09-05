@@ -8,6 +8,9 @@ public class Constants {
     public static final String DEFAULT_USER = "defaultUser";
     //私聊消息
     public static final String PRIVATE_CHEAT_MESSAGE = "privateChatMessage";
+    public static final String FILE_FOLDER = "file/";
+    public static final String FILE_AVATAR = "avatar/";
+    public static final Integer LENGTH_30 = 30;
 
     private static final String REDIS_KEY_PREFIX = "tzxchat:";
     public static final String USER_ID_TO_TOKEN_KEY =REDIS_KEY_PREFIX + "userIdToToken:";
