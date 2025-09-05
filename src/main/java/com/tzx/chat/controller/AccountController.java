@@ -66,7 +66,7 @@ public class AccountController {
         return ResultUtils.success(loginUserVO);
     }
 
-    //@AuthCheck
+    @AuthCheck
     @PostMapping("/getUserInfoVO")
     public BaseResponse<LoginUserVO> getUserInfoVO(HttpServletRequest request){
         LoginUserVO loginUserVO = userInfoService.getTokenUserVO(request);
