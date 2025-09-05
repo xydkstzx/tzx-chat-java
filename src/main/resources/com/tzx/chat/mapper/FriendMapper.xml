@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tzx.chat.mapper.FriendMapper">
+
+    <resultMap id="BaseResultMap" type="com.tzx.chat.entiy.domain.Friend">
+            <id property="id" column="id" />
+            <result property="userId" column="user_id" />
+            <result property="friendId" column="friend_id" />
+            <result property="remark" column="remark" />
+            <result property="status" column="status" />
+            <result property="createdTime" column="created_time" />
+            <result property="updatedTime" column="updated_time" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,friend_id,remark,status,created_time,
+        updated_time
+    </sql>
+    <select id="selectFriendsByUserId" resultType="com.tzx.chat.entiy.vo.fridens.FriendVO">
+        SELECT
+            u.id AS friendId,                  -- 好友的用户ID（对应user表的id）
+            f.remark AS remark,                -- 当前用户对该好友的备注名（来自friend表的remark）
+            u.user_name AS friendName,          -- 好友的用户名（来自user表的username）
+            u.avatar AS avatar,                -- 好友的头像URL（来自user表的avatar）
+            u.nick_name AS friendNickName       -- 好友昵称（来自user表的nickname）
+        FROM friend f
+                 JOIN `user_info` u ON u.id = CASE
+                                            -- 如果当前用户是发送者userId匹配 则 friendId是好友id 否则 userId 是好友id
+                                             WHEN f.user_id = #{currentUserId} THEN f.friend_id
+                                             ELSE f.user_id
+            END
+        WHERE
+            f.status = 1                       -- 只查询已成为好友的关系
+          AND (f.user_id = #{currentUserId} OR f.friend_id = #{currentUserId})  -- 筛选当前用户的好友
+    </select>
+</mapper>
